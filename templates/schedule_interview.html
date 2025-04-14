@@ -1,0 +1,72 @@
+{% if session['role'] == 'recruiter' %}
+	{% include 'rhead.html' %}
+{% elif session['role'] == 'seeker' %}
+	{% include "shead.html" %}
+{% elif session['role'] == 'company' %}
+	{% include 'chead.html' %}
+{% endif %}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $("#number_of_interview_rounds").on("keyup",function(){
+            NoOfFunctions();
+        })
+    });
+    function NoOfFunctions(){
+        let number_of_interview_rounds = $("#number_of_interview_rounds").val();
+        number_of_interview_rounds = parseInt(number_of_interview_rounds);
+        let html = `<div class="row">`
+			for(let i =1; i<number_of_interview_rounds+1; i++){
+			html = html+`
+				  <div class="w-30 p-5">
+					<div class="card p-10" style="padding:10px;margin-top:10px">
+						<div class="" style="text-align:center">Interview Round ${i}</div>
+						<div class="form-group mt-10">
+							<label class="form-label" for="round_name">Round Name</label>
+							<input type="text" name="round_name${i}" id="round_name${i}" placeholder="Enter round  Name" class="form-control" required>
+					   </div>
+				  </div>
+				 </div>`
+			}
+		  `  </div>`
+			$("#rounds").html(html);
+			console.log(rounds);
+    }
+</script>
+
+
+
+<form action="schedule_interview_action"  method="post">
+
+<div class="container-fluid mt-50">
+    <div class="row">
+		<div class="w-10"></div>
+
+		<div class="w-30">
+			<div class="card">
+				<div class="fs-20 text-center">Schedule Interview</div>
+					<input type="hidden" name="job_application_id" value="{{job_application_id}}">
+					<div class="row p-20">
+						<div class="w-100">
+                            <input type="number" name="number_of_interview_rounds" id="number_of_interview_rounds" class="form-control p-5"  placeholder="Number Of Interview Rounds" required>
+                        </div>
+						<div class="w-100">
+							<input type="datetime-local" placeholder="Enter Interview date Time" class="form-control mt-10" name="Interview_date_time" id="Interview_date_time" required>
+						 </div>
+						<div class="w-100">
+							<textarea placeholder="Enter feedback name" class="form-control mt-10" name="feedback" id="feedback" required></textarea>
+						 </div>
+						<div class="middle mt-20 w-100">
+							<input type="submit" class="btn  btn-primary w-80" value="Schedule Interview">
+						</div>
+					</div>
+			</div>
+		</div>
+         <div class="w-50">
+			<div id="rounds"></div>
+		</div>
+    </div>
+</div>
+</form>

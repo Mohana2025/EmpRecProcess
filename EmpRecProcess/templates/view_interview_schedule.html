@@ -1,0 +1,73 @@
+{% if session['role'] == 'recruiter' %}
+	{% include 'rhead.html' %}
+{% elif session['role'] == 'seeker' %}
+	{% include "shead.html" %}
+{% elif session['role'] == 'company' %}
+	{% include 'chead.html' %}
+{% endif %}
+
+<div class="container-fluid mt-30">
+        <div class="fs-20 Text-center">View Interview Schedules</div>
+        {% for interview in interviews %}
+          {% set count = is_interview_expired(interview['end_date'],interview['_id'])%}
+        <div class="row">
+            <div class="w-30"></div>
+            <div class="w-40">
+                <div class="card p-10 mt-30">
+                    <div class="text-center mt-5">Date: <b>{{interview["date"]}}</b></div>
+                     <div class="text-center mt-5">Expired On: <b>{{interview["end_date"].strftime("%m-%d-%Y %I:%M %p")}}</b></div>
+                    <div class="text-center mt-5">Type of Interview :
+                        <div>
+                            {% for Interview_type in interview['Interview_types'] %}
+                                <li class="mt-10">{{Interview_type}}</li>
+                            {% endfor %}
+
+                        </div></div>
+                    <div class="text-center mt-5">Interview Date&Time:
+                        <div><b>{{interview["Interview_date_time"]}}</b></div>
+                    </div>
+                    <div class="text-center mt-5"><b>Status</b>: {{interview["status"]}}</div>
+                    <div class="text-center mt-5"><b>Description</b>: {{interview["feedback"]}}</div>
+                    {%  if session['role']=='seeker' %}
+                        {%  if interview["status"]=='Interview Scheduled' %}
+                        <div class="row">
+                            <div class="w-50  text-center mt-15">
+                                <a href="accept_interview?interview_id={{interview['_id']}}" class="btn" style="background-color:green;">Accept</a>
+                            </div>
+                            <div class="w-50 text-center mt-15">
+                                <a href="reject_interview?interview_id={{interview['_id']}}" class="btn" style="background-color:Red">Reject</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                     {%  if session['role']!='seeker' %}
+                        {%  if interview["status"]=='Accepted' %}
+                        <div class="w-50  text-center mt-15">
+                             <a href="start_interview?interview_id={{interview['_id']}}" class="btn btn-info w-100">Start Interview</a>
+                        </div>
+                        {% endif %}
+                        {%  if interview["status"]=='Interview Started' %}
+                        <div class="row">
+                            <div class="w-50  text-center mt-15">
+                                 <a href="selected?interview_id={{interview['_id']}}" class="btn btn-info w-100" style="background-color:green;">Mark As Selected</a>
+                            </div>
+                            <div class="w-50  text-center mt-15">
+                                 <a href="rejected?interview_id={{interview['_id']}}" class="btn btn-info w-100" style="background-color:Red;">Mark As Rejected</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                    {%  if session['role']=='company' %}
+                        {%  if interview["status"]=='Mark As Selected' %}
+                            <div class="w-50  text-center mt-15">
+                                 <a href="selected_for_job?interview_id={{interview['_id']}}" class="btn btn-info w-100" style="background-color:Red;">Selected For Job</a>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+        {% endfor  %}
+</div>

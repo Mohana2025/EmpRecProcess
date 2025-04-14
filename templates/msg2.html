@@ -1,0 +1,13 @@
+{% if session['role'] == 'admin' %}
+	{% include 'ahead.html' %}
+{% elif session['role'] == 'recruiter' %}
+	{% include 'rhead.html' %}
+{% elif session['role'] == 'seeker' %}
+	{% include "shead.html" %}
+{% elif session['role'] == 'company' %}
+	{% include 'chead.html' %}
+{% endif %}
+
+<div class="row mt-100 p-5 middle">
+    <div class="card fs-30 text-center">{{ msg }}</div>
+</div>

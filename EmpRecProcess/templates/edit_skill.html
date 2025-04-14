@@ -1,0 +1,32 @@
+{% include 'ahead.html' %}
+
+
+
+
+<div class="container-fluid mt-5">
+    <div class="row mt-50">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <form action="edit_skill_action" class="card p-20">
+           <input type="hidden" name="skill_id" value="{{skill_id}}">
+            <div class="row">
+                 <div class="w-50">
+                    <input type="text" placeholder="Enter Skill name" class="form-control " name="skill_name" id="skill_name" required>
+                 </div>
+                <div class="w-50 middle">
+                    <input type="submit" class="btn  btn-primary w-50" value="Upadate Skill">
+                </div>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

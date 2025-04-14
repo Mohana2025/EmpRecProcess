@@ -1,0 +1,97 @@
+{% if session['role'] == 'admin' %}
+	{% include 'ahead.html'%}
+{% endif %}
+{% if session['role'] == 'recruiter' %}
+	{% include 'rhead.html'%}
+{% endif %}
+{% if session['role'] == 'seeker' %}
+	{% include "shead.html" %}
+{% endif %}
+{% if session['role'] == 'company' %}
+	{% include 'chead.html'%}
+{% endif %}
+
+
+<div class="">
+    <div class="row">
+        {% for seeker in seekers: %}
+        <div class="col-2"></div>
+        <div class="col-4">
+            <div class="card mt-100">
+            <div class="text-center fs-20"><b>Seeker Details</b>
+                <a href="edit_seeker_profile?seeker_id={{seeker['_id']}}">Edit Profile</a>
+
+            </div><hr>
+               <div class="row">
+                   <div class="col-6 fs-18">
+                       <div class="mt-5">Name</div>
+                       <div class="mt-5">Phone</div>
+                       <div class="mt-5">Email</div>
+                       <div class="mt-5">Work Experience</div>
+                       <div class="mt-5">Resume</div>
+                   </div>
+                   <div class="col-6  fs-18">
+                       <div class="mt-5">: {{seeker['first_name']}}</div>
+                       <div class="mt-5">: {{seeker['phone']}}</div>
+                       <div class="mt-5">: {{seeker['email']}}</div>
+                       <div class="mt-5">: {{seeker['work_experience']}} Year</div>
+                       <div class="mt-5">:
+                        <table class="table table-bordered">
+                             <tbody>
+                               {% for resume in seeker['resumes']%}
+                                <tr>
+                                    <td><a href="../static/Resumes/{{resume}}">{{resume}}</a></td>
+                                </tr>
+                             {% endfor%}
+                             </tbody>
+                        </table>
+                       </div>
+
+
+                   </div>
+               </div>
+                <div class="mt-15 fs-18 text-center">Qualifications
+                <a href="add_qualification?seeker_id={{seeker['_id']}}">Add Qualification</a>
+
+                </div><hr>
+                <div class="row">
+                    <div class="col-4">
+                        <div class="fs-18 text-center"> Degree</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="fs-18 text-center"> Institute</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="fs-18 text-center"> Year of Graduation</div>
+                    </div>
+                </div>
+                {% for qualification in seeker['qualifications'] %}
+                <div class="row mt-5">
+                    <div class="col-4">
+                        <div class="text-center"> {{qualification['degree']}}</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center">{{qualification['institute']}}</div>
+                    </div>
+                    <div class="col-4">
+                        <div class="text-center">{{qualification['year_of_graduation']}}</div>
+                    </div>
+                </div>
+                {% endfor %}
+                 <div class="mt-10 fs-18 text-center">Skills</div><hr>
+                    {% for skill in seeker['skills'] %}
+                        {% set skill = get_skill_by_skill_id(skill['skill_id']) %}
+                        <div class="mt-5 text-center">{{skill['skill_name']}}</div>
+                    {% endfor %}
+
+            </div>
+        </div>
+        <div class="col-4 p-10">
+            <div class="card mt-100 ">
+            <div class="text-center fs-20"><b>Cover Letter</b></div><hr>
+                       <div class="mt-15 text-center ">{{seeker['cover_letter']}}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

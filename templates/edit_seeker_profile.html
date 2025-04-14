@@ -1,0 +1,105 @@
+{% include 'shead.html' %}
+
+
+<div class="">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 p-5">
+            <div class="card mt-30" style="overflow:auto;height:600px;">
+                <form action="/edit_seeker_profile_action" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="seeker_id" value="{{seeker['_id']}}">
+                    <div class="text-center heading mb-10">Seeker Edit Profile Here</div>
+                    <div class="text-center mt-20">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                        </svg>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 p-10">
+                            <select name="skill_id" id="skill_id" class="form-control" multiple>
+                                <option value="">Choose Skill</option>
+                                {% for skill in skills: %}
+                                    <option value="{{skill['_id']}}">{{skill['skill_name']}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="row">
+                        <div class="col-6 p-10">
+                             <div>
+                                 <label>First Name</label>
+                                 <input type="text" name="first_name" id="first_name" value="{{seeker['first_name']}}" placeholder="Enter First name" class="form-control" required>
+                             </div>
+                             <div>
+                                 <label>Email</label>
+
+                                 <input type="email" name="email" id="email" placeholder="Enter email" value="{{seeker['email']}}" class="form-control" required>
+                             </div>
+                             <div>
+                                 <label>password</label>
+                                 <input type="password" name="password" id="password" placeholder="Enter password" class="form-control" required>
+                             </div>
+                             <div>
+                                 <label>state</label>
+                                 <input type="text" name="state" id="state" placeholder="Enter state" value="{{seeker['state']}}" class="form-control" required>
+                             </div>
+                            <div>
+                                <label>city</label>
+                                 <input type="text" name="city" id="city" placeholder="Enter City" value="{{seeker['city']}}" class="form-control" required>
+                             </div>
+                        </div>
+                        <div class="col-6 p-10">
+                              <div>
+                                  <label>Last Name</label>
+                                 <input type="text" name="last_name" id="last_name" placeholder="Enter last name" value="{{seeker['last_name']}}" class="form-control" required>
+                              </div>
+                              <div>
+                                  <label>Phone</label>
+                                  <input type="tel" name="phone" id="phone" placeholder="Enter phone" value="{{seeker['phone']}}" class="form-control" required>
+                              </div>
+                             <div>
+                                 <label>Enter Confirm Password</label>
+                                 <input type="password" name="password2" id="password2" placeholder="Confirm password"  class="form-control" required>
+                             </div>
+                             <div>
+                                 <label>zipcode</label>
+                                 <input type="number" name="zipcode" id="zipcode" placeholder="Enter zipcode" value="{{seeker['zipcode']}}" class="form-control" required>
+                             </div>
+                            <div>
+                                <label>Work Experience</label>
+                                 <input type="number" name="work_experience" id="work_experience" value="{{seeker['work_experience']}}" placeholder="Enter work_experience" class="form-control" required>
+                             </div>
+
+
+                        </div>
+                    </div>
+                    </div>
+                            <div>
+                                <label>expert_technology</label>
+                                 <input type="text" name="expert_technology" id="expert_technology" placeholder="Expert Technology" value="{{seeker['expert_technology']}}" class="form-control" required>
+                             </div>
+                        <div>
+                            <label>Resume</label>
+                             <input type="file" name="resume" id="resume" placeholder="Enter resume"  class="form-control" required>
+                         </div>
+                        <div>
+                            <label>Cover Letter</label>
+                            <textarea type="text" name="cover_letter" id="cover_letter"  placeholder="Enter cover_letter" class="form-control" required>{{seeker['cover_letter']}}</textarea>
+                      </div>
+                        <div>
+                            <label>Address</label>
+                            <textarea type="text" name="address" id="address" placeholder="Enter address" class="form-control"  required>{{seeker['address']}}</textarea>
+                      </div>
+                    <div class="middle">
+                        <input type="submit" value="Update" class="btn btn-primary btn-primary-hover:hover mt-20 w-70">
+                    </div>
+                    <div class="text-center msg mt-20">{{message}}</div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

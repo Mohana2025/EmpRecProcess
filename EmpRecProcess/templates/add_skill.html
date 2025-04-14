@@ -1,0 +1,51 @@
+{% include 'ahead.html' %}
+
+
+
+
+<div class="container-fluid mt-5">
+    <div class="row mt-50">
+        <div class="col-1"></div>
+        <div class="col-4">
+            <form action="add_skill_action"  method="post" class="card p-20">
+                <div class="row">
+                     <div class="w-50">
+                        <input type="text" placeholder="Enter Skill name" class="form-control " name="skill_name" id="skill_name" required>
+                     </div>
+                    <div class="w-50 middle">
+                        <input type="submit" class="btn  btn-primary w-50" value="Add Skill">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-2 middle">
+        </div>
+        <div class="col-4 middle p-10">
+            <div class="h5">View Skill</div>
+            <table class="table table-bordered card">
+                <thead class="">
+                    <tr>
+                        <td>Skill Name</td>
+                        <td>Action</td>
+                    </tr>
+                    </thead>
+                    {% for skill in skills %}
+                    <tr class="bordered">
+                        <td>{{skill['skill_name']}}</td>
+                        <td><a href="edit_skill?skill_id={{skill['_id']}}" class="edit-aicon">Edit</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+

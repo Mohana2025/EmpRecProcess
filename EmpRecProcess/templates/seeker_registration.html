@@ -1,0 +1,127 @@
+{% include 'head.html' %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    function add_qualification(){
+          let number_of_qualifications = $("#number_of_qualifications").val();
+          number_of_qualifications = parseInt(number_of_qualifications)+1;
+          $("#number_of_qualifications").val(number_of_qualifications)
+          let qualifications = `
+               <input  type="hidden" value="{{seeker_id}}" name="seeker_id">
+               <div class="row">
+                    <div class="w-30 p-10">
+                        <input type="text" id="degree"  class="form-control" placeholder="Enter Degree" name="degree${number_of_qualifications}" required>
+                   </div>
+                   <div class="w-30 p-10">
+                      <input type="text" id="institute"  class="form-control" placeholder="Enter Institute Name"  name="institute${number_of_qualifications}" required>
+                   </div>
+                   <div class="w-40 p-10">
+                      <input type="number" id="year_of_graduation" min='1950'  class="form-control" placeholder="Enter Year of Graduation"  name="year_of_graduation${number_of_qualifications}" required>
+                   </div>
+               </div>`
+          console.log(qualifications)
+          $("#qualifications").append(qualifications)
+    }
+</script>
+<form action="seeker_registration_action" method="post" enctype="multipart/form-data">
+<div class="">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-4 p-5">
+            <div class="card mt-30" style="overflow:auto;height:600px;">
+                    <div class="text-center heading mb-10">Seeker Register Here</div>
+                    <div class="text-center mt-20">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                        </svg>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 p-10">
+                            <select name="skill_id" id="skill_id" class="form-control" multiple>
+                                <option value="">Choose Skill</option>
+                                {% for skill in skills: %}
+                                    <option value="{{skill['_id']}}">{{skill['skill_name']}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="row">
+                        <div class="col-6 p-10">
+                             <div>
+                                 <input type="text" name="first_name" id="first_name" placeholder="Enter First name" class="form-control" required>
+                             </div>
+                             <div>
+                                 <input type="email" name="email" id="email" placeholder="Enter email" class="form-control" required>
+                             </div>
+                             <div>
+                                 <input type="password" name="password" id="password" placeholder="Enter password" class="form-control" required>
+                             </div>
+                             <div>
+                                 <input type="text" name="state" id="state" placeholder="Enter state" class="form-control" required>
+                             </div>
+                            <div>
+                                 <input type="text" name="city" id="city" placeholder="Enter City" class="form-control" required>
+                             </div>
+                        </div>
+                        <div class="col-6 p-10">
+                              <div>
+                                 <input type="text" name="last_name" id="last_name" placeholder="Enter last name" class="form-control" required>
+                              </div>
+                              <div>
+                                  <input type="tel" name="phone" id="phone" placeholder="Enter phone" class="form-control" required>
+                              </div>
+                             <div>
+                                 <input type="password" name="password2" id="password2" placeholder="Confirm password" class="form-control" required>
+                             </div>
+                             <div>
+                                 <input type="number" name="zipcode" id="zipcode" placeholder="Enter zipcode" class="form-control" required>
+                             </div>
+                            <div>
+                                 <input type="number" name="work_experience" id="work_experience" placeholder="Enter work_experience" class="form-control" required>
+                             </div>
+
+
+                        </div>
+                    </div>
+                    </div>
+                            <div>
+                                 <input type="text" name="expert_technology" id="expert_technology" placeholder="Expert Technology" class="form-control" required>
+                             </div>
+                        <div>
+                            <label>Resume</label>
+                             <input type="file" name="resume" id="resume" placeholder="Enter resume" class="form-control" multiple required>
+                         </div>
+                        <div>
+                            <textarea type="text" name="cover_letter" id="cover_letter" placeholder="Enter cover_letter" class="form-control" required></textarea>
+                      </div>
+                        <div>
+                            <textarea type="text" name="address" id="address" placeholder="Enter address" class="form-control" required></textarea>
+                      </div>
+                    <div class="middle">
+                        <input type="submit" value="Register" class="btn btn-primary btn-primary-hover:hover mt-20 w-70">
+                    </div>
+                    <div class="text-center msg mt-20">{{message}}</div>
+                </form>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card mt-35 p-5">
+                <div class=" ">
+                    <div class="" id="qualifications"></div>
+                    <input type="hidden" name="number_of_qualifications" id="number_of_qualifications" value="{{0}}">
+                    <div>
+                    <div onclick="add_qualification()" class="btn btn-primary w-30 mt-5">Add Qualification</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</form>
+
+
+
+
+
+
+
+

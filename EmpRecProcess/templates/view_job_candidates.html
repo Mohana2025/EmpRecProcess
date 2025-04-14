@@ -1,0 +1,37 @@
+{% include 'chead.html' %}
+
+
+<div class="container-fluid mt-5 ">
+    <div class="fs-30 text-center mt-30"><b>View Selected Candidates</b></div>
+    <div class="row mt-50">
+    <div class="w-10"></div>
+    {% for job_post in job_posts %}
+         {% for job_candidate in job_post['job_candidates'] %}
+         {% set seeker = get_seeker_by_seeker_id(job_candidate['seeker_id'])%}
+            <div class="w-25 p-10 text-center">
+                <div class="card p-10">
+                    <div class="mt-10">Seeker Name : <b><a href="/profile?seeker_id={{seeker['_id']}}">{{seeker['first_name']}} {{seeker['last_name']}}</a></b></div>
+                    <div class="mt-10">Email : <b>{{seeker['email']}}</b></div>
+                    <div class="mt-10">Phone : <b>{{seeker['phone']}}</b></div>
+                    <div class="mt-10">Status : <b>{{job_candidate['status']}}</b></div>
+                    <div class="mt-10">Date : <b>{{job_candidate['date']}}</b></div>
+                    {%  if session['role']=='company' %}
+                        {%  if job_candidate["status"]=='Mark As Selected' %}
+                            <div class="row">
+                                <div class="w-50  text-center mt-15">
+                                     <a href="selected_for_job?seeker_id={{job_candidate['seeker_id']}}&job_post_id={{job_post['_id']}}" class="btn btn-info w-100" style="background-color:Green;">Selected For Job</a>
+                                </div>
+                                <div class="w-50  text-center mt-15">
+                                     <a href="Reject_for_job?seeker_id={{job_candidate['seeker_id']}}&job_post_id={{job_post['_id']}}" class="btn btn-info w-100" style="background-color:red;">Rejected For Job</a>
+                                </div>
+
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+
+    {% endfor %}
+    </div>
+</div>

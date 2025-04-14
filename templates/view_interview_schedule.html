@@ -1,0 +1,69 @@
+{% if session['role'] == 'recruiter' %}
+	{% include 'rhead.html' %}
+{% elif session['role'] == 'seeker' %}
+	{% include "shead.html" %}
+{% elif session['role'] == 'company' %}
+	{% include 'chead.html' %}
+{% endif %}
+
+<div class="container-fluid mt-30">
+    <div class="fs-20 text-center">View Interview Schedules</div>
+    {% for interview in interviews %}
+        {% set _ = is_interview_expired(interview['end_date'], interview['_id']) %}
+        <div class="row">
+            <div class="w-30"></div>
+            <div class="w-40">
+                <div class="card p-10 mt-30">
+                    <div class="text-center mt-5">Scheduled On: <b>{{ interview["date"] }}</b></div>
+                    <div class="text-center mt-5">Expires On: <b>{{ interview["end_date"].strftime("%m-%d-%Y %I:%M %p") }}</b></div>
+                    <div class="text-center mt-5">Interview Rounds:
+                        <ul>
+                            {% for Interview_type in interview['Interview_types'] %}
+                                <li class="mt-10">{{ Interview_type }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="text-center mt-5">Scheduled Date & Time:
+                        <div><b>{{ interview["Interview_date_time"] }}</b></div>
+                    </div>
+                    <div class="text-center mt-5"><b>Status:</b> {{ interview["status"] }}</div>
+                    <div class="text-center mt-5"><b>Feedback:</b> {{ interview["feedback"] }}</div>
+
+                    {% if session['role'] == 'seeker' and interview["status"] == 'Interview Scheduled' %}
+                    <div class="row">
+                        <div class="w-50 text-center mt-15">
+                            <a href="accept_interview?job_application_id={{ job_application_id }}&interview_id={{ interview['_id'] }}" class="btn" style="background-color:green;">Accept</a>
+                        </div>
+                        <div class="w-50 text-center mt-15">
+                            <a href="reject_interview?job_application_id={{ job_application_id }}&interview_id={{ interview['_id'] }}" class="btn" style="background-color:red;">Reject</a>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% if session['role'] != 'seeker' %}
+                        {% if interview["status"] == 'Accepted' %}
+                        <div class="w-100 text-center mt-15">
+                            <a href="start_interview?job_application_id={{ job_application_id }}&interview_id={{ interview['_id'] }}" class="btn btn-info w-100">Start Interview</a>
+                        </div>
+                        {% elif interview["status"] == 'Interview Started' %}
+                        <div class="row">
+                            <div class="w-50 text-center mt-15">
+                                <a href="selected?interview_id={{ interview['_id'] }}" class="btn btn-info w-100" style="background-color:green;">Mark As Selected</a>
+                            </div>
+                            <div class="w-50 text-center mt-15">
+                                <a href="rejected?job_application_id={{ job_application_id }}&interview_id={{ interview['_id'] }}" class="btn btn-info w-100" style="background-color:red;">Mark As Rejected</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if session['role'] == 'company' and interview["status"] == 'Mark As Selected' %}
+                    <div class="w-100 text-center mt-15">
+                        <a href="selected_for_job?job_post_id={{ interview['job_post_id'] }}&seeker_id={{ interview['seeker_id'] }}" class="btn btn-info w-100" style="background-color:green;">Selected For Job</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

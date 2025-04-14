@@ -1,0 +1,85 @@
+{% if session['role'] == 'recruiter' %}
+	{% include 'rhead.html' %}
+{% elif session['role'] == 'seeker' %}
+	{% include "shead.html" %}
+{% elif session['role'] == 'company' %}
+	{% include 'chead.html' %}
+{% endif %}
+
+
+
+<div class="container-fluid mt-5 ">
+    <div class="fs-30 text-center mt-20"><b>View Job Posts</b></div>
+        <form action="{{ url_for('view_job_post') }}" method="GET" class="form-inline my-4">
+            <div class="row mt-10">
+                <div class="col-2">
+                </div>
+                <div class="col-6 text-center">
+                    <input type="text" name="search" class="form-control w-100 text-center" placeholder="Search by Job Title (or) Job Type  (or) Skill Required" value="{{ request.args.get('search', '') }}">
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                </div>
+            </div>
+        </form>
+    <div class="row mt-50">
+
+    <div class="w-10"></div>
+    {% for job_post in job_posts %}
+        <div class="w-25 p-10">
+            <div class="card p-10">
+                <div class="fs-20 text-center">{{job_post['job_title']}}</div>
+                <div class="text-center mt-5">Type of Job <b>{{job_post['job_type']}}</b></div>
+                <div class="text-center mt-5">Skill Required <b>{{job_post['skill_required']}}</b></div>
+                <div class="text-center mt-5">No.of openings <b>{{job_post['no_of_openings']}}</b></div>
+                <div class="text-center mt-5">Job post date  <b>{{job_post['post_date'].strftime("%d-%m-%Y")}}</b></div>
+                <div class="text-center mt-5">Job application last date <b>{{job_post['last_date'].strftime("%d-%m-%Y")}}</b></div>
+                <div class="text-center mt-5">The Description Of the job is  <b>{{job_post['job_description']}}</b></div>
+                <div class="text-center mt-5">The Location Of the job is <b>{{job_post['location']}}</b></div>
+                <div class="middle">
+                    {% if session['role'] != 'seeker' %}
+                    <a href="view_job_candidates?job_post_id={{job_post['_id']}}" class="btn btn-primary btn-primary-hover:hover mt-20">View Job Candidates</a>
+                    {% endif %}
+                     {% if session['role'] == 'recruiter' %}
+                    <a href="select_to_recruit?job_post_id={{job_post['_id']}}" class="btn btn-primary btn-primary-hover:hover mt-20">Select To Recruit</a>
+
+
+                    {% endif %}
+
+                    {% if session['role'] == 'seeker' %}
+                        <div class="row">
+                            {% if job_post['post_date']<=date and job_post['last_date']>=date %}
+                            {% set count = get_is_job_applied(job_post['_id']) %}
+                            {% set count1 = job_post_count(job_post['_id']) %}
+
+                                {% if count == 0 %}
+                                    <div class="">
+                                        <label class="middle" style="color:Red">Upload resume here & apply for the job.</label>
+                                        <form action="/apply_job" method="POST" enctype="multipart/form-data">
+
+                                            <input type="hidden" name="job_post_id" value="{{ job_post['_id'] }}">
+                                            <div class="card mt-5">
+                                                <div class="w-100">
+                                                    <input type="file" name="resume" class="form-control" id="resume" required>
+                                                </div>
+                                                <div class="middle">
+                                                    <input type="submit" value="Apply Job" class="btn btn-primary btn-primary-hover:hover mt-20 w-50">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                {% else %}
+                                <a href="view_applications?job_post_id={{job_post['_id']}}" class="btn btn-primary btn-primary-hover:hover mt-20 w-100">View Application</a>
+                                {% endif %}
+
+                            {% else %}
+                                <div class="text-center text-danger mt-5"><b>Application date expired</b></div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>

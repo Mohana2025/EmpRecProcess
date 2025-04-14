@@ -1,0 +1,103 @@
+{% if session['role'] == 'recruiter' %}
+	{% include 'rhead.html' %}
+{% elif session['role'] == 'seeker' %}
+	{% include "shead.html" %}
+{% elif session['role'] == 'company' %}
+	{% include 'chead.html' %}
+{% endif %}
+
+
+
+<div class="container-fluid mt-5 ">
+    <div class="fs-30 text-center mt-30"><b>View Job Applications</b></div>
+    <div class="row mt-50">
+    {% for job_application in job_applications %}
+        {% set job_post = get_job_post_by_job_post_id(job_application['job_post_id'])%}
+        {% set seeker = get_seeker_by_seeker_id(job_application['seeker_id'])%}
+        {% set recruiter = get_recruiter_by_recruiter_id(job_post['recruiter_id'])%}
+        {% set company = get_company_by_company_id(job_post['company_id'])%}
+        <div class="w-20 mt-20"></div>
+        <div class="w-70">
+            <div class="card p-10 mt-20">
+                <div class="row">
+
+
+                    <div class="fs-21 w-70">Job Application Applied date : <b> {{job_application['date']}}</b></div>
+                    <div class="fs-17 w-30 text-center">Status : <b> {{job_application['status']}}</b></div>
+                </div>
+                <div class="row">
+                    <div class="w-25 p-20">
+                        <div class="text-center fs-18 ">Job Details</div><hr>
+                        <div class="text-center mt-5"><b>{{job_post['job_title']}} Job</b></div>
+                        <div class="text-center mt-5">Type of Job <b>{{job_post['job_type']}}</b></div>
+                        <div class="text-center mt-5">Skill Required <b>{{job_post['skill_required']}}</b></div>
+                        <div class="text-center mt-5">The Location Of the job is <b>{{job_post['location']}}</b></div>
+                    </div>
+                    <div class="w-25 p-20">
+                        <div class="text-center fs-18 ">Recruiter Details</div><hr>
+                        <div class="text-center mt-5">Contact Person <b>{{recruiter['contact_person']}}</b></div>
+                        <div class="text-center mt-5">Email address <b>{{recruiter['email']}}</b></div>
+                        <div class="text-center mt-5">Phone Number <b>{{recruiter['phone']}}</b></div>
+                    </div>
+                    <div class="w-25 p-20">
+                        <div class="text-center fs-18 ">Company Details</div><hr>
+                        <div class="text-center mt-5">Name Of the Company <b>{{company['first_name']}}</b></div>
+                        <div class="text-center mt-5">Email address <b>{{company['email']}}</b></div>
+                        <div class="text-center mt-5">Phone Number <b>{{company['phone']}}</b></div>
+                    </div>
+                    <div class="w-25 p-20">
+                        <div class="text-center fs-18 ">Seeker Details</div><hr>
+                        <div class="text-center mt-5">Name Of the Seeker <b>{{seeker['first_name']}}</b></div>
+                        <div class="text-center mt-5">Email address <b>{{seeker['email']}}</b></div>
+                        <div class="text-center mt-5">Phone Number <b>{{seeker['phone']}}</b></div>
+                        <a href="/static/Resumes/{{seeker['resume']}}">View Resume</a>
+                    </div>
+                </div>
+                <div class="row">
+                    {% if session['role'] == 'seeker'%}
+                        {% if job_application['status'] == 'Applied' %}
+                        <div class="w-50 middle">
+                            <a href="drop_application?job_application_id={{job_application['_id']}}" class="btn bg-danger">Drop Application</a>
+                        </div>
+                        {% endif %}
+                        {% if job_application['status'] == 'Selected For Interview' %}
+                        <div class="w-50 middle">
+                            <a href="view_interview_schedule?job_application_id={{job_application['_id']}}" class="btn bg-danger">View Interview Schedule</a>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                    {% if session['role'] != 'seeker' %}
+                    {% if job_application['status'] == 'Applied' %}
+                    <form action="update_request_status" class="btn p-5 w-50" style="background-color:green;">
+                        <input type="hidden" name="job_application_id" value="{{job_application['_id']}}">
+                        <input type="hidden" name="status" value="Accepted">
+                        <input type="submit" value="Accept" class="btn p-10 w-100">
+                    </form>
+                    {% endif %}
+                    {% if job_application['status'] == 'Applied' %}
+                    <form action="update_request_status" class="btn bg-danger p-10 w-50" style="background-color:red;">
+                        <input type="hidden" name="job_application_id" value="{{job_application['_id']}}">
+                        <input type="hidden" name="status" value="Rejected">
+                        <input type="submit" value="Reject"  class="btn bg-danger p-10 w-100">
+                    </form>
+                    {% endif %}
+
+                    {% endif %}
+                    {% if session['role'] != 'seeker'%}
+                        {% if job_application['status'] == 'Accepted' %}
+                        <div class="w-50 middle">
+                            <a href="schedule_interview?job_application_id={{job_application['_id']}}" class="btn bg-danger">Scheedule Interview</a>
+                        </div>
+                        {% endif %}
+                        {% if job_application['status'] == 'Selected For Interview' %}
+                        <div class="w-50 middle">
+                            <a href="view_interview_schedule?job_application_id={{job_application['_id']}}" class="btn bg-danger">View Interview Schedule</a>
+                        </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>

@@ -1,0 +1,78 @@
+{% include 'head.html' %}
+<div class="">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <div class="card mt-30">
+                <form action="company_registration_action" method="post">
+                    <div class="text-center heading mb-10">Company Register Here</div>
+                    <div class="text-center mt-30">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/><path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+                        </svg>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 p-10">
+                             <div>
+                                 <input type="text" name="first_name" id="first_name" placeholder="Enter First name" class="form-control" required>
+                             </div>
+                             <div>
+                                 <input type="email" name="email" id="email" placeholder="Enter email" class="form-control" required>
+                             </div>
+                             <div>
+                                 <input type="password" name="password" id="password" placeholder="Enter password" class="form-control" required>
+                             </div>
+                             <div>
+                                 <input type="text" name="state" id="state" placeholder="Enter state" class="form-control" required>
+                             </div>
+                            <div>
+                                 <input type="text" name="city" id="city" placeholder="Enter City" class="form-control" required>
+                             </div>
+                        </div>
+                        <div class="col-6 p-10">
+                              <div>
+                                 <input type="text" name="last_name" id="last_name" placeholder="Enter last name" class="form-control" required>
+                              </div>
+                              <div>
+                                  <input type="tel" name="phone" id="phone" placeholder="Enter phone" class="form-control" required>
+                              </div>
+                             <div>
+                                 <input type="password" name="password2" id="password2" placeholder="Confirm password" class="form-control" required>
+                             </div>
+                            <div>
+                                 <input type="number" name="zipcode" id="zipcode" placeholder="Enter zipcode" class="form-control" required>
+                             </div>
+                              <div>
+                                  <input type="text" name="address" id="address" placeholder="Enter address" class="form-control" required>
+                              </div>
+
+                        </div>
+
+                    </div>
+                    <div>
+                          <input type="text" name="about" id="about" placeholder="Enter about company" class="form-control mt-20" required>
+                      </div>
+                    <div class="middle">
+                        <input type="submit" value="Register" class="btn btn-primary btn-primary-hover:hover mt-20 w-70">
+                    </div>
+                    <div class="text-center msg mt-20">{{message}}</div>
+                </form>
+            </div>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

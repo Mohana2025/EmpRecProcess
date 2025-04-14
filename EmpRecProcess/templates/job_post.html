@@ -1,0 +1,56 @@
+{% include 'chead.html' %}
+
+<div class="container-fluid mt-5">
+    <div class="row mt-50">
+        <div class="col-1"></div>
+        <div class="col-4">
+            <form action="job_post_action"  method="post" class="card p-20">
+                <div class="text-center fs-25"><b>Add Job Post</b></div>
+                <div class="row ">
+                     <div class="w-50 p-10">
+                        <input type="text" placeholder="Enter Job Title" class="form-control " name="job_title" id="job_title" required>
+                     </div>
+                    <div class="w-50 p-10">
+                        <input type="text" placeholder="Enter Job Type" class="form-control " name="job_type" id="job_type" required>
+                     </div>
+                    <div class="w-50 p-10">
+                        <input type="text" placeholder="Enter Skill Required" class="form-control " name="skill_required" id="skill_required" required>
+                     </div>
+                     <div class="w-50 p-10">
+                        <input type="number" placeholder="Enter no_of_openings" class="form-control " name="no_of_openings" id="no_of_openings" required>
+                     </div>
+                    <div class="w-50 p-10">
+                        <label>Application Start Date</label>
+                        <input type="date" placeholder="Enter Post Date" class="form-control " name="post_date" id="post_date" required>
+                     </div>
+                    <div class="w-50 p-10">
+                        <label>Application End Date</label>
+                        <input type="date" placeholder="Enter Last Date" class="form-control " name="last_date" id="last_date" required>
+                     </div>
+                     <div class="w-100 p-10">
+                         <textarea  placeholder="Enter Job Description" class="form-control " name="job_description" id="job_description" required></textarea>
+                     </div>
+                     <div class="w-100 p-10">
+                         <textarea  placeholder="Enter Location" class="form-control " name="location" id="location" required></textarea>
+                     </div>
+                    <div class="w-100 middle mt-15">
+                        <input type="submit" class="btn  btn-primary w-50" value="Add Job Post">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-2 middle">
+        </div>
+        <div class="col-4 middle p-10">
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
